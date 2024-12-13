@@ -7,6 +7,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
 import { motion } from "framer-motion";
+import axios from "axios";
+import * as yup from "yup";
+import { Form, Formik } from "formik";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 const info = [
   {
@@ -26,7 +31,44 @@ const info = [
   },
 ];
 
+interface IContactValue {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
+const initialValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  message: "",
+};
+
+const validationSchema = yup.object({
+  firstName: yup.string().required("First name is required"),
+  lastName: yup.string().required("Last name is required"),
+  email: yup
+    .string()
+    .email("Email must be a valid email")
+    .required("Email is required"),
+  message: yup.string().required("Message is required"),
+});
+
 export default function ContactPage() {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async (
+    values: IContactValue,
+    { resetForm }: { resetForm: () => void }
+  ) => {
+    await axios.post("/api/contact", { ...values });
+    setIsSubmitted(true);
+    resetForm();
+  };
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -39,17 +81,120 @@ export default function ContactPage() {
       <div className="container mx-auto">
         <div className="flex flex-col xl:flex-row gap-[30px] ">
           <div className="xl:h-[54%] order-2 xl:order-none">
-            <form className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl">
-              <h3 className="text-4xl text-accent">Let's work together</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Input type="firstName" placeholder="First Name" />
-                <Input type="lastName" placeholder="Last Name" />
-                <Input type="email" placeholder="Email Address" />
-                <Input type="phone" placeholder="Phone Number" />
-              </div>
-              <Textarea className="h-[200px]" placeholder="Type your message here" />
-              <Button size="md" className="max-w-40">Send message</Button>
-            </form>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ values, handleChange, errors, touched, isSubmitting }) => (
+                <Form className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl">
+                  <h3 className="text-4xl text-accent">
+                    Let&apos;s work together
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <Input
+                        name="firstName"
+                        placeholder="First Name"
+                        value={values.firstName}
+                        onChange={handleChange}
+                        className={cn("w-full", {
+                          "border border-red-500":
+                            errors.firstName && touched.firstName,
+                        })}
+                      />
+                      {errors.firstName && touched.firstName && (
+                        <p className="text-sm text-red-500 mt-2 ml-1">
+                          {errors.firstName}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <Input
+                        name="lastName"
+                        placeholder="Last Name"
+                        value={values.lastName}
+                        onChange={handleChange}
+                        className={cn("w-full", {
+                          "border border-red-500":
+                            errors.lastName && touched.lastName,
+                        })}
+                      />
+                      {errors.lastName && touched.lastName && (
+                        <p className="text-sm text-red-500 mt-2 ml-1">
+                          {errors.lastName}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <Input
+                        name="email"
+                        placeholder="Email Address"
+                        value={values.email}
+                        onChange={handleChange}
+                        className={cn("w-full", {
+                          "border border-red-500":
+                            errors.email && touched.email,
+                        })}
+                      />
+                      {errors.email && touched.email && (
+                        <p className="text-sm text-red-500 mt-2 ml-1">
+                          {errors.email}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <Input
+                        name="phone"
+                        placeholder="Phone Number"
+                        value={values.phone}
+                        onChange={handleChange}
+                        className={cn("w-full", {
+                          "border border-red-500":
+                            errors.phone && touched.phone,
+                        })}
+                      />
+                      {errors.phone && touched.phone && (
+                        <p className="text-sm text-red-500 mt-2 ml-1">
+                          {errors.phone}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <Textarea
+                      placeholder="Type your message here"
+                      name="message"
+                      value={values.message}
+                      onChange={handleChange}
+                      className={cn("w-full h-[200px]", {
+                        "border border-red-500":
+                          errors.message && touched.message,
+                      })}
+                    />
+                    {errors.message && touched.message && (
+                      <p className="text-sm text-red-500 mt-2 ml-1">
+                        {errors.message}
+                      </p>
+                    )}
+                  </div>
+                  {isSubmitted && (
+                    <div className="text-green-500">
+                      Your message has been sent successfully. I will get back
+                      to you soon.
+                    </div>
+                  )}
+                  <Button
+                    size="md"
+                    className="max-w-40"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    {!isSubmitting ? "Send message" : "Sending..."}
+                  </Button>
+                </Form>
+              )}
+            </Formik>
           </div>
           <div className="flex-1 flex items-center xl:justify-end order-1 xl:order-none mb-8 xl:mb-0">
             <ul className="flex flex-col gap-10">

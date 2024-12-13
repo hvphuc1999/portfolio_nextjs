@@ -1,7 +1,7 @@
 "use client";
 
 import { FaCss3, FaHtml5, FaJs, FaReact } from "react-icons/fa";
-import { SiNextdotjs, SiTailwindcss } from "react-icons/si";
+import { SiNextdotjs, SiTailwindcss, SiTypescript, SiRedux, SiAntdesign, SiMaterialdesign, SiBootstrap } from "react-icons/si";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Tooltip,
@@ -14,7 +14,7 @@ import { motion } from "framer-motion";
 
 const about = {
   title: "About me",
-  description: `I am a highly motivated and experienced software engineer with a passion for creating innovative and efficient solutions.  My expertise lies in developing and implementing robust and scalable applications using various technologies, including JavaScript, React, Node.js, and Python. I am proficient in agile methodologies and possess strong problem-solving and communication skills.`,
+  description: "",
   info: [
     {
       fieldName: "Name",
@@ -38,10 +38,10 @@ const about = {
 const experience = {
   icon: "/assets/resume/badge.svg",
   title: "My Experience",
-  description: `I have 3+ years of experience in software development.  My experience includes working on a variety of projects, from small-scale applications to large-scale enterprise systems. I am proficient in a variety of programming languages and technologies, and I am always eager to learn new things.`,
+  description: `I have 3+ years experience in build web application and a motivated individual with in-depth knowledge of languages, seeking a position in a growth-oriented company where I can use my skills to the advantage of the company while having the scope to develop my own skills.`,
   items: [
     {
-      company: "Relia Software",
+      company: "Co.Relia Software",
       position: "Frontend Developer",
       duration: "2021 - Present",
     },
@@ -51,7 +51,7 @@ const experience = {
 const education = {
   icon: "/assets/resume/cap.svg",
   title: "My Education",
-  description: `I have 3+ years of experience in software development.  My experience includes working on a variety of projects, from small-scale applications to large-scale enterprise systems. I am proficient in a variety of programming languages and technologies, and I am always eager to learn new things.`,
+  description: `I studied at University of Science (HCM City). My major is Software Engineering and I graduated with very good degree`,
   items: [
     {
       institution: "University Of Science",
@@ -64,7 +64,7 @@ const education = {
 
 const skills = {
   title: "My Skills",
-  description: `I have a wide range of skills in software development, including proficiency in JavaScript, React, Node.js, Python, and various other technologies.  I am also proficient in agile methodologies and possess strong problem-solving and communication skills.`,
+  description: `I have a quite wide range of skills in software development, including proficiency in HTML, CSS, JavaScript, TypeScript, React, Redux, Material UI, Ant Design, Bootstrap, NextJS, Tailwind.  I am also proficient in agile methodologies and possess strong problem-solving and communication skills.`,
   skillList: [
     {
       icon: <FaHtml5 />,
@@ -79,8 +79,28 @@ const skills = {
       name: "javascript",
     },
     {
+      icon: <SiTypescript />,
+      name: "typescript",
+    },
+    {
       icon: <FaReact />,
       name: "react.js",
+    },
+    {
+      icon: <SiRedux />,
+      name: "redux",
+    },
+    {
+      icon: <SiMaterialdesign />,
+      name: "material UI",
+    },
+    {
+      icon: <SiAntdesign />,
+      name: "ant design",
+    },
+    {
+      icon: <SiBootstrap />,
+      name: "bootstrap",
     },
     {
       icon: <SiNextdotjs />,

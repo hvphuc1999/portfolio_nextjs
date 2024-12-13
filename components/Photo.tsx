@@ -22,12 +22,12 @@ export default function Photo() {
         >
           <div className="w-[300px] h-[300px] xl:w-[506px] xl:h-[506px] mix-blend-lighten absolute">
             <Image
-              src="/assets/photo.png"
+              src="/assets/photo.jpg"
               priority
               quality={100}
               fill
               alt=""
-              className="object-contain rounded-full"
+              className="object-cover rounded-full"
             />
           </div>
         </motion.div>

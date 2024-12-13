@@ -4,13 +4,11 @@ import Link from "next/link";
 import {
   FaGithub,
   FaLinkedinIn,
-  FaFacebook,
 } from "react-icons/fa";
 
 const socials = [
-  { icon: <FaGithub />, path: '' },
-  { icon: <FaLinkedinIn />, path: '' },
-  { icon: <FaFacebook />, path: '' },
+  { icon: <FaGithub />, path: process.env.NEXT_PUBLIC_GITHUB ?? "" },
+  { icon: <FaLinkedinIn />, path: process.env.NEXT_PUBLIC_LINKEDIN ?? "" },
 ]
 
 export default function Social({ containerStyles, iconStyles }: {containerStyles?: string;
@@ -19,7 +17,7 @@ export default function Social({ containerStyles, iconStyles }: {containerStyles
   return (
     <div className={containerStyles}>
       {socials?.map((item, index) => (
-        <Link key={index} href={item.path} className={iconStyles}>
+        <Link key={index} href={item.path} className={iconStyles} target="_blank">
           {item.icon}
         </Link>
       ))}
